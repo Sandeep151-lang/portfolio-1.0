@@ -8,7 +8,7 @@ var nodemailer=require('nodemailer')
 // });
 
 router.post('/message', async (req, res) => {
-  console.log(req.body)
+
   const { name, email, message } = req.body;
   var transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -26,16 +26,12 @@ router.post('/message', async (req, res) => {
   transporter.sendMail(mailOptions, function (error, info) {
     if (error) {
       console.log(error);
-      return res.status(400).send(error)
+      return res.status(503).send(error)
     } else {
       console.log('Email sent: ' + info.response);
-      return res.status(200).send(info.response)
+      return res.status(204).send(info.response)
     }
   });
-  return res.status(200).send(token)
-
-
-    
 
 })
 

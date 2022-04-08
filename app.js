@@ -9,7 +9,12 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 var app = express();
-app.use(cors())
+const corsOptions = {
+  origin: true, //included origin as true
+  credentials: true, //included credentials as true
+};
+app.use(cors(corsOptions));
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -28,6 +33,13 @@ app.use('/users', usersRouter);
 app.use(function(req, res, next) {
   next(createError(404));
 });
+
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Headers", "*");
+  res.header('Access-Control-Allow-Credentials', false);
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+  next()
+})
 
 // error handler
 app.use(function(err, req, res, next) {
