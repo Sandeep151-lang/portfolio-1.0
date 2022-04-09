@@ -10,6 +10,9 @@ var nodemailer=require('nodemailer')
 router.post('/message', async (req, res) => {
 
   const { name, email, message } = req.body;
+  if (!name || !email || !message) {
+    return res.status(400).json('please fill the required field')
+  }
   var transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
